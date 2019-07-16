@@ -35,6 +35,12 @@
     <feature name="Vibration">
         <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
     </feature>
+    <feature name="Printer">
+        <param name="android-package" value="de.appplant.cordova.plugin.printer.Printer" />
+    </feature>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
     <name>Apizaco</name>
     <description>
         Hello World sample application that responds to the deviceready event.

@@ -36,6 +36,12 @@
     },
     "cordova-plugin-vibration": {
       "PACKAGE_NAME": "com.mplay.app"
+    },
+    "cordova-plugin-printer": {
+      "PACKAGE_NAME": "com.mplay.app"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.mplay.app"
     }
   },
   "dependent_plugins": {
@@ -43,6 +49,9 @@
       "PACKAGE_NAME": "com.mplay.app"
     },
     "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.mplay.app"
+    },
+    "es6-promise-plugin": {
       "PACKAGE_NAME": "com.mplay.app"
     }
   }

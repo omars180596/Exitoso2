@@ -7,6 +7,17 @@ var $$ = Dom7;
 var pictureSource;
 var destinationType;
 
+
+var _fecha = "";
+var _causa = "";
+var _lugar = "";
+var _caracteristicas = "";
+var _placa = "";
+var _persona = "";
+var _garantia = "";
+var _img = "";
+
+
 var app7 = new Framework7({
   // App root element
   root: '#app',
@@ -51,6 +62,7 @@ var app = {
     placa:"",
     calle:"",
     modelo:"",
+ 
 
 
 
@@ -137,7 +149,7 @@ var app = {
            },
            error:function(error){
 
-          mainView.router.navigate('/home/',{animate:true});
+       app7.dialog.alert("Atencion acaba de incurrir en el articulo 5");
 
            }
            
@@ -234,51 +246,19 @@ Placa1:function(){
 });
 },
     
-    Placa2:function(){
-
-      mainView.router.navigate('/placa2/',{animate:true});
     
-   
-},
-    Licencia:function(){
-
-      mainView.router.navigate('/licencia/',{animate:true});
-    
-    },
-    Licencia1:function(){
-
-      mainView.router.navigate('/licencia1/',{animate:true});
-    
-    },
-    Licencia2:function(){
-
-      mainView.router.navigate('/licencia2/',{animate:true});
-    
-    },
-    Tarjeta:function(){
-
-      mainView.router.navigate('/tarjeta/',{animate:true});
-    
-    },
-    Tarjeta1:function(){
-
-      mainView.router.navigate('/tarjeta1/',{animate:true});
-    
-    },
-    Tarjeta2:function(){
-
-      mainView.router.navigate('/tarjeta2/',{animate:true});
-    
-    },
     placas:function(){
- this.dia=$$('#dia').val();
-  this.placa=$$('#placa').val();
-  this.modelo=$$('#modelo').val();
-  this.calle=$$('#calle').val();
+ this._fecha=$$('#_fecha').val();
+  this._causa=$$('#_causa').val();
+  this._lugar=$$('#_lugar').val();
+  this._caracteristicas=$$('#_caracteristicas').val();
+  this._placa=$$('#_placa').val();
+  this._persona=$$('#_persona').val();
+  this._garantia=$$('#_garantia').val();
 
   app7.request({
-  url: this.hostname+'/mplay/api/pedro.php',
-  data:{dia:this.dia,placa:this.placa,modelo:this.modelo,calle:this.calle},
+  url: this.hostname+'/mplay/api/juan.php',
+  data:{_fecha:this._fecha,_causa:this._causa,_lugar:this._lugar,_caracteristicas:this._caracteristicas,_placa:this._placa,_persona:this._persona,_garantia:this._garantia},
   method:'POST',
   crossDomain: true,
   success:function(data){
@@ -364,16 +344,42 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
 });
 
 
+$$(document).on('page:init', '.page[data-name="preview"]', function (e) {
+      console.log('View preview load Init!');
+      app7.panel.allowOpen = true;
+      app7.panel.enableSwipe('left');
+
+      $$('#_prev_fecha').html(_fecha);
+
+      $$('#_prev_causa').html(_causa);      
+      $$('#_prev_lugar').html(_lugar);
+      $$('#_prev_caracteristicas').html(_caracteristicas);
+      $$('#_prev_placa').html(_placa);
+      $$('#_prev_persona').html(_persona);
+
+      $$('#_prev_garantia').html(_garantia);
+
+
+      ConvertImage();
+
+      
+});
+
+
 
 //###Función para Imprimir Documento####//
 function PrintDocument(){
 
-    var fecha = document.getElementById('dia').value;
-    var placa = document.getElementById('placa').value;  
-    var modelo = document.getElementById('modelo').value;
-    var direccion = document.getElementById('calle').value;
+  
+    _fecha = document.getElementById('_fecha').value;
+    _causa = document.getElementById('_causa').value;
+    _lugar = document.getElementById('_lugar').value;  
+    _caracteristicas = document.getElementById('_caracteristicas').value;
+    _placa = document.getElementById('_placa').value;
+    _persona = document.getElementById('_persona').value;
+    _garantia = document.getElementById('_garantia').value;
 
-    var page = '<strong>Fecha:</strong> '+fecha+' <br><strong>Placa:</strong> '+placa+' <br><strong>Datos del Vehiculo:</strong> '+modelo+'<br><strong>Direccion:</strong> '+direccion;
+    var page = '<strong>Fecha:</strong> '+_fecha+' <br><strong>Placa:</strong> '+_placa+' <br><strong>Datos del Vehiculo:</strong> '+_caracteristicas+'<br><strong>Direccion:</strong> '+_lugar+_causa+_persona;
     cordova.plugins.printer.print(page, 'Document.html');
 
 }
@@ -405,6 +411,10 @@ smallImage.style.display = 'block';
 
 // This function is used to display the captured image
 smallImage.src = "data:image/jpeg;base64," + imageData;
+
+
+_img = "data:image/jpeg;base64," + imageData;
+
 }
 
 
@@ -424,3 +434,56 @@ function onFail(message) {
 alert('Failed because: ' + message);
 }
 
+
+function Preview(){
+
+
+    _fecha = $$('#_fecha').val();   //document.getElementById('_fecha').value;
+     _causa = document.getElementById('_causa').value; 
+    _lugar = document.getElementById('_lugar').value;  
+    _caracteristicas = document.getElementById('_caracteristicas').value;
+    _placa = document.getElementById('_placa').value;
+    _persona = document.getElementById('_persona').value;
+    _garantia = document.getElementById('_garantia').value;
+
+
+      
+
+ mainView.router.navigate('/preview/',{animate:true});
+
+ //ConvertImage();
+
+}
+
+
+
+function ConvertImage() {
+
+  var node = document.getElementById('_foto');
+
+  domtoimage.toPng(node)
+    .then(function(dataUrl) {
+    console.log(dataUrl);
+      //window.open(dataUrl);
+      var img = new Image();
+      img.src = dataUrl;
+      document.getElementById("photoprint").appendChild(img);
+
+
+      var img2 = new Image();
+      img2.src = _img;
+
+    
+      document.getElementById("photo2").appendChild(img2);
+
+      document.getElementById("_foto").style.display = 'none';
+       
+      window.plugins.socialsharing.share(null, 'Infraccion', [dataUrl,_img], null)
+
+      
+    })
+    .catch(function(error) {
+      console.error('oops, something went wrong!', error);
+    });
+
+}

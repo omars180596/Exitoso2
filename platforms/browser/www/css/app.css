@@ -345,6 +345,15 @@ color: #fff;
       -webkit-background-size:130%;
 
 }
+.color{
+      height:100%;
+      background: white;
+      background-size: 10%;
+  paint-order: ="Solvetic"
+      -webkit-background-size:130%;
+
+}
+
             .img3{
         width: 80% ;
         -webkit-background-size:100%;
@@ -517,5 +526,15 @@ color: #fff;
      
       /* Uncomment for 3D effect */
       /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+    }
+
+
+#photo2{
+  text-align: center;
+}
+
+    #photo2>img{
+      width: 50%;
+      height: 50%;
     }
   
